@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { env } from '@/lib/env';
 import { getAllPostsMeta, getCategories } from '@/lib/blog';
+import { VILLES } from '@/lib/villes';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = env.siteUrl;
@@ -9,6 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/', priority: 1, freq: 'weekly' },
     { path: '/methode', priority: 0.9, freq: 'monthly' },
     { path: '/pour-qui', priority: 0.9, freq: 'monthly' },
+    { path: '/audit-restaurant', priority: 0.8, freq: 'monthly' },
     { path: '/blog', priority: 0.8, freq: 'weekly' },
     { path: '/a-propos', priority: 0.6, freq: 'monthly' },
     { path: '/faq', priority: 0.7, freq: 'monthly' },
@@ -35,5 +37,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: 'weekly',
     priority: 0.6,
   }));
-  return [...staticEntries, ...postEntries, ...categoryEntries];
+  const villeEntries: MetadataRoute.Sitemap = VILLES.map((v) => ({
+    url: `${base}/audit-restaurant/${v.slug}`,
+    lastModified: now,
+    changeFrequency: 'monthly',
+    priority: 0.7,
+  }));
+  return [...staticEntries, ...postEntries, ...categoryEntries, ...villeEntries];
 }

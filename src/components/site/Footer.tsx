@@ -30,6 +30,7 @@ export function Footer() {
             <li><Link href="/#piliers" className="hover:text-orange">Les 10 piliers</Link></li>
             <li><Link href="/methode" className="hover:text-orange">Notre méthode</Link></li>
             <li><Link href="/pour-qui" className="hover:text-orange">Pour qui</Link></li>
+            <li><Link href="/audit-restaurant" className="hover:text-orange">Zones d’intervention</Link></li>
             <li><Link href="/blog" className="hover:text-orange">Blog</Link></li>
             <li><Link href="/#tarifs" className="hover:text-orange">Tarifs</Link></li>
             <li><Link href="/#configurateur" className="hover:text-orange">Configurer mon audit</Link></li>

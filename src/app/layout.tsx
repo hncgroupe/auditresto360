@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from 'next';
 import { Poppins } from 'next/font/google';
 import '@/styles/globals.css';
 import { env } from '@/lib/env';
+import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import { JsonLd } from '@/components/site/JsonLd';
 import { organizationSchema, websiteSchema } from '@/lib/schema';
 
@@ -80,6 +82,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <JsonLd data={organizationSchema()} />
         <JsonLd data={websiteSchema()} />
         {children}
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
