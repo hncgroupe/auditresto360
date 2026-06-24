@@ -15,6 +15,26 @@ export interface PostMeta {
   category: string;
   tags: string[];
   readingMinutes: number;
+  cover: string;
+}
+
+/** Banque de visuels par catégorie (photos réelles dans /public/img). */
+const COVERS: Record<string, string[]> = {
+  'Hygiène & HACCP': ['/img/cuisine-propre.jpg', '/img/inspection.jpg', '/img/controle-cover.webp'],
+  Conformité: ['/img/inspection.jpg', '/img/audit-tablette.jpg', '/img/controle-cover.webp'],
+  'Gestion & rentabilité': ['/img/audit-tablette.jpg', '/img/services.webp', '/img/support.webp'],
+  'Ressources humaines': ['/img/chef.jpg', '/img/audit-heureux.webp', '/img/support.webp'],
+  'Commercial & digital': ['/img/services.webp', '/img/audit-tablette.jpg', '/img/audit-heureux.webp'],
+  'Projets & développement': ['/img/controle-cover.webp', '/img/cuisine-propre.jpg', '/img/chef.jpg'],
+};
+const FALLBACK_COVERS = ['/img/cuisine-propre.jpg', '/img/inspection.jpg', '/img/audit-tablette.jpg'];
+
+/** Choisit un visuel stable pour un article (varie dans la catégorie selon le slug). */
+export function coverFor(category: string, slug: string): string {
+  const pool = COVERS[category] ?? FALLBACK_COVERS;
+  let h = 0;
+  for (let i = 0; i < slug.length; i++) h = (h * 31 + slug.charCodeAt(i)) >>> 0;
+  return pool[h % pool.length];
 }
 
 export interface Post extends PostMeta {
@@ -44,6 +64,7 @@ function readPost(file: string): Post {
     category: String(data.category ?? 'Conseils'),
     tags: Array.isArray(data.tags) ? data.tags.map(String) : [],
     readingMinutes,
+    cover: data.cover ? String(data.cover) : coverFor(String(data.category ?? 'Conseils'), slug),
     raw: content,
     html: marked.parse(content) as string,
   };

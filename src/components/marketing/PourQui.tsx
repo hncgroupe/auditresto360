@@ -1,28 +1,33 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Reveal } from '@/components/site/Reveal';
 
 export const CIBLES = [
   {
     id: 'independant',
     titre: 'Restaurateur indépendant',
+    img: '/img/chef.jpg',
     desc: 'Vous gérez seul votre établissement et voulez un diagnostic complet pour gagner en sérénité et en marge.',
     points: ['Diagnostic 360° de votre restaurant', 'Priorités claires, sans jargon', 'Plan d’action réaliste à votre rythme'],
   },
   {
     id: 'ouverture',
     titre: 'Ouverture / création',
+    img: '/img/cuisine-propre.jpg',
     desc: 'Vous lancez un restaurant. Cadrez l’hygiène, l’organisation et la rentabilité avant le jour J.',
     points: ['Mise en conformité avant ouverture', 'Process et organisation posés dès le départ', 'Carte et food cost optimisés'],
   },
   {
     id: 'reprise',
     titre: 'Reprise / rachat',
+    img: '/img/audit-tablette.jpg',
     desc: 'Vous reprenez un fonds. Sachez exactement ce que vous achetez avant de signer.',
     points: ['Audit avant rachat (forces et risques)', 'État réel de la conformité et des équipes', 'Leviers de redressement chiffrés'],
   },
   {
     id: 'groupe',
     titre: 'Groupe & franchise',
+    img: '/img/controle-cover.webp',
     desc: 'Vous pilotez plusieurs établissements ou un réseau. Harmonisez les standards et sécurisez la marque.',
     points: ['Audit multi-sites homogène', 'Référentiel commun et notation comparable', 'Suivi du réseau et des franchisés'],
   },
@@ -41,9 +46,14 @@ export function PourQui() {
       <div className="mt-9 grid gap-4 md:grid-cols-2">
         {CIBLES.map((c, i) => (
           <Reveal key={c.id} delay={i * 60}>
-            <div className="card-hover flex h-full flex-col rounded-2xl border border-ink/8 bg-white p-6 shadow-card">
-              <h3 className="text-lg font-bold text-ink">{c.titre}</h3>
-              <p className="mt-2 text-sm text-ink/70">{c.desc}</p>
+            <div className="card-hover group flex h-full flex-col overflow-hidden rounded-2xl border border-ink/8 bg-white shadow-card">
+              <div className="relative aspect-[16/9] overflow-hidden">
+                <Image src={c.img} alt="" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover transition-transform duration-500 group-hover:scale-105" />
+                <div className="absolute inset-0 bg-gradient-to-t from-ink/55 to-transparent" aria-hidden="true" />
+                <h3 className="absolute bottom-3 left-4 text-lg font-bold text-white">{c.titre}</h3>
+              </div>
+              <div className="flex flex-1 flex-col p-6">
+              <p className="text-sm text-ink/70">{c.desc}</p>
               <ul className="mt-4 space-y-2">
                 {c.points.map((p) => (
                   <li key={p} className="flex items-start gap-2 text-sm text-ink/80">
@@ -56,9 +66,10 @@ export function PourQui() {
                   </li>
                 ))}
               </ul>
-              <Link href="/#configurateur" className="mt-5 inline-flex text-sm font-semibold text-orange-700 hover:text-orange-800">
+              <Link href="/#configurateur" className="mt-auto pt-5 inline-flex text-sm font-semibold text-orange-700 hover:text-orange-800">
                 Estimer cet audit →
               </Link>
+              </div>
             </div>
           </Reveal>
         ))}

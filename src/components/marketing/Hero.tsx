@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 export function Hero() {
   return (
@@ -35,35 +36,49 @@ export function Hero() {
           </dl>
         </div>
 
-        {/* Carte radar décorative */}
+        {/* Photo réelle + carte score en overlay */}
         <div className="relative">
-          <div className="rounded-3xl border border-ink/8 bg-white p-6 shadow-soft">
+          <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] border border-ink/8 shadow-soft sm:aspect-[5/5]">
+            <Image
+              src="/img/inspection.jpg"
+              alt="Auditeur auditresto360 en inspection dans la cuisine d'un restaurant"
+              fill
+              priority
+              sizes="(max-width: 1024px) 100vw, 48vw"
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-ink/45 via-transparent to-transparent" aria-hidden="true" />
+          </div>
+
+          {/* Carte score flottante */}
+          <div className="absolute -bottom-5 -left-3 w-[78%] max-w-xs rounded-2xl border border-ink/8 bg-white/95 p-4 shadow-soft backdrop-blur sm:-left-6">
             <div className="flex items-center justify-between">
-              <p className="text-sm font-semibold text-ink">Rapport auditresto360</p>
-              <span className="rounded-full bg-orange-50 px-2.5 py-1 text-xs font-semibold text-orange-700">Score 78/100</span>
+              <p className="text-xs font-semibold text-ink/70">Score d’audit 360°</p>
+              <span className="rounded-full bg-orange-50 px-2 py-0.5 text-xs font-bold text-orange-700">78/100</span>
             </div>
-            <div className="mt-5 space-y-3">
+            <div className="mt-3 space-y-2">
               {[
                 { l: 'Hygiène & HACCP', v: 72 },
-                { l: 'Cuisine & production', v: 84 },
-                { l: 'Ressources humaines', v: 61 },
                 { l: 'Gestion & food cost', v: 70 },
                 { l: 'Carte & commercial', v: 88 },
               ].map((b) => (
                 <div key={b.l}>
-                  <div className="flex justify-between text-xs text-ink/70">
+                  <div className="flex justify-between text-[11px] text-ink/65">
                     <span>{b.l}</span>
-                    <span className="font-semibold text-ink">{b.v}/100</span>
+                    <span className="font-semibold text-ink">{b.v}</span>
                   </div>
-                  <div className="mt-1 h-2 overflow-hidden rounded-full bg-ink/8">
+                  <div className="mt-1 h-1.5 overflow-hidden rounded-full bg-ink/10">
                     <div className="h-full rounded-full bg-orange" style={{ width: `${b.v}%` }} />
                   </div>
                 </div>
               ))}
             </div>
-            <p className="mt-5 rounded-xl bg-orange-50/70 px-4 py-3 text-xs text-ink/70">
-              Exemple illustratif. Chaque audit produit un rapport noté, les points critiques et un plan d'action priorisé.
-            </p>
+          </div>
+
+          {/* Badge indépendant flottant */}
+          <div className="absolute -right-2 top-5 rounded-xl border border-ink/8 bg-white/95 px-3 py-2 shadow-card backdrop-blur sm:-right-4">
+            <p className="text-xs font-bold text-ink">10 piliers</p>
+            <p className="text-[11px] text-ink/60">audités sur place</p>
           </div>
         </div>
       </div>

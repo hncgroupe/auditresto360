@@ -3,6 +3,7 @@ import { TrustBar } from '@/components/marketing/TrustBar';
 import { Probleme } from '@/components/marketing/Probleme';
 import { Piliers } from '@/components/marketing/Piliers';
 import { PourQui } from '@/components/marketing/PourQui';
+import { Expertise } from '@/components/marketing/Expertise';
 import { Deroule } from '@/components/marketing/Deroule';
 import { Configurateur } from '@/components/marketing/Configurateur';
 import { Tarifs } from '@/components/marketing/Tarifs';
@@ -22,6 +23,7 @@ export default function HomePage() {
       <TrustBar />
       <Probleme />
       <Piliers />
+      <Expertise />
       <PourQui />
       <Deroule />
       <Configurateur />

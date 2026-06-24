@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { getAllSlugs, getPost, getRelated } from '@/lib/blog';
 import { env } from '@/lib/env';
@@ -24,6 +25,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       description: post.description,
       url: `${env.siteUrl}/blog/${slug}`,
       publishedTime: post.date,
+      images: [{ url: post.cover }],
     },
   };
 }
@@ -80,9 +82,13 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           <span className="mt-6 inline-block text-xs font-semibold uppercase tracking-wide text-orange-600">{post.category}</span>
           <h1 className="mt-3 text-3xl font-extrabold leading-[1.1] tracking-tightest text-ink sm:text-4xl">{post.title}</h1>
           <p className="mt-4 text-lg text-ink/75">{post.description}</p>
-          <p className="mt-5 border-b border-ink/10 pb-6 text-sm text-ink/50">
+          <p className="mt-5 text-sm text-ink/50">
             Par {post.author} · {fmtDate(post.date)} · {post.readingMinutes} min de lecture
           </p>
+
+          <div className="relative mt-8 aspect-[16/9] overflow-hidden rounded-3xl border border-ink/8 shadow-card">
+            <Image src={post.cover} alt="" fill sizes="(max-width: 768px) 100vw, 768px" className="object-cover" priority />
+          </div>
 
           <div
             className="prose prose-neutral mt-8 max-w-none prose-headings:font-extrabold prose-headings:tracking-tightest prose-h2:mt-10 prose-h2:text-2xl prose-h3:text-xl prose-a:text-orange-700 prose-a:no-underline hover:prose-a:underline prose-strong:text-ink prose-li:marker:text-orange-500"
@@ -109,10 +115,15 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
             <h2 className="section-title text-2xl">À lire aussi</h2>
             <div className="mt-6 grid gap-5 md:grid-cols-3">
               {related.map((p) => (
-                <Link key={p.slug} href={`/blog/${p.slug}`} className="card-hover flex h-full flex-col rounded-2xl border border-ink/8 bg-white p-6 shadow-card">
-                  <span className="text-xs font-semibold uppercase tracking-wide text-orange-600">{p.category}</span>
-                  <h3 className="mt-2 text-base font-bold leading-snug text-ink">{p.title}</h3>
-                  <p className="mt-2 flex-1 text-sm text-ink/70">{p.description}</p>
+                <Link key={p.slug} href={`/blog/${p.slug}`} className="card-hover group flex h-full flex-col overflow-hidden rounded-2xl border border-ink/8 bg-white shadow-card">
+                  <div className="relative aspect-[16/10] overflow-hidden">
+                    <Image src={p.cover} alt="" fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition-transform duration-500 group-hover:scale-105" />
+                  </div>
+                  <div className="flex flex-1 flex-col p-5">
+                    <span className="text-xs font-semibold uppercase tracking-wide text-orange-600">{p.category}</span>
+                    <h3 className="mt-1 text-base font-bold leading-snug text-ink">{p.title}</h3>
+                    <p className="mt-2 flex-1 text-sm text-ink/70">{p.description}</p>
+                  </div>
                 </Link>
               ))}
             </div>
