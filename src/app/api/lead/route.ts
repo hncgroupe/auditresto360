@@ -3,7 +3,7 @@ import { leadSchema } from '@/lib/validation';
 import { env } from '@/lib/env';
 import { notifyTelegram, formatLeadMessage } from '@/lib/telegram';
 import { sendTransactionalEmail, leadConfirmationEmail } from '@/lib/brevo';
-import { euros, labelProjet, labelTaille, labelsModules } from '@/lib/config';
+import { euros, labelProjet, labelTaille } from '@/lib/config';
 
 export const runtime = 'nodejs';
 
@@ -35,10 +35,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Le consentement est requis.' }, { status: 400 });
   }
 
-  const estimation =
-    data.estimationMin && data.estimationMax
-      ? `${euros(data.estimationMin)} à ${euros(data.estimationMax)}`
-      : null;
+  const prix = data.estimationMin ? euros(data.estimationMin) : null;
 
   // 1. Enregistrement en base (CRM mutualisé audithygiène : table "leads").
   // On n'écrit que les colonnes existantes ; les détails du configurateur
@@ -76,10 +73,10 @@ export async function POST(request: Request) {
       telephone: data.telephone ?? null,
       ville: [data.ville, data.codePostal].filter(Boolean).join(' ') || null,
       projet: labelProjet(data.projet) ?? null,
-      modules: data.modules?.length ? labelsModules(data.modules) : null,
+      formule: data.formule ?? null,
       taille: labelTaille(data.taille) ?? null,
       nbEtablissements: data.nbEtablissements ?? null,
-      estimation,
+      estimation: prix,
       message: data.message ?? null,
     })
   ).catch(() => false);

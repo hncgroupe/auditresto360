@@ -35,7 +35,7 @@ export function formatLeadMessage(lead: {
   telephone?: string | null;
   ville?: string | null;
   projet?: string | null;
-  modules?: string[] | null;
+  formule?: string | null;
   taille?: string | null;
   nbEtablissements?: string | null;
   estimation?: string | null;
@@ -48,9 +48,9 @@ export function formatLeadMessage(lead: {
     lead.telephone ? `📞 ${lead.telephone}` : null,
     lead.ville ? `📍 ${lead.ville}` : null,
     lead.projet ? `🎯 ${lead.projet}` : null,
+    lead.formule ? `📦 ${lead.formule}` : null,
     lead.taille ? `🍽️ ${lead.taille}` : null,
     lead.nbEtablissements ? `🏢 ${lead.nbEtablissements} établissement(s)` : null,
-    lead.modules?.length ? `🧩 ${lead.modules.join(', ')}` : null,
     lead.estimation ? `💶 ${lead.estimation}` : null,
     lead.message ? `📝 ${lead.message}` : null,
   ]

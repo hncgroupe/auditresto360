@@ -3,15 +3,15 @@
 import { useMemo, useState } from 'react';
 import {
   PROJETS,
-  MODULES,
+  FORMULES,
   TAILLES,
   NB_ETABLISSEMENTS,
-  estimer,
+  getFormule,
   euros,
+  TVA_MENTION,
   labelProjet,
   labelTaille,
   labelNbEtab,
-  labelsModules,
 } from '@/lib/config';
 
 type Status = 'idle' | 'loading' | 'success' | 'error';
@@ -24,13 +24,11 @@ function Tuile({
   onClick,
   title,
   desc,
-  check = false,
 }: {
   on: boolean;
   onClick: () => void;
   title: string;
   desc?: string;
-  check?: boolean;
 }) {
   return (
     <button
@@ -41,7 +39,7 @@ function Tuile({
       }`}
     >
       <span
-        className={`mt-0.5 grid h-5 w-5 shrink-0 place-items-center ${check ? 'rounded' : 'rounded-full'} border ${
+        className={`mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full border ${
           on ? 'border-orange bg-orange text-white' : 'border-ink/25 bg-white'
         }`}
       >
@@ -63,7 +61,7 @@ export function Configurateur() {
   const [step, setStep] = useState(1);
 
   const [projet, setProjet] = useState('');
-  const [modules, setModules] = useState<string[]>(MODULES.map((m) => m.id)); // audit 360 complet par défaut
+  const [formuleId, setFormuleId] = useState('');
   const [taille, setTaille] = useState('');
   const [nbEtab, setNbEtab] = useState('1');
 
@@ -77,17 +75,14 @@ export function Configurateur() {
   const [status, setStatus] = useState<Status>('idle');
   const [error, setError] = useState('');
 
-  const toggleModule = (id: string) =>
-    setModules((p) => (p.includes(id) ? p.filter((x) => x !== id) : [...p, id]));
-  const allOn = modules.length === MODULES.length;
-  const toggleAll = () => setModules(allOn ? [] : MODULES.map((m) => m.id));
-
-  const estimation = useMemo(() => estimer({ projet, modules, taille, nbEtab }), [projet, modules, taille, nbEtab]);
+  const formule = useMemo(() => getFormule(formuleId), [formuleId]);
+  const nb = NB_ETABLISSEMENTS.find((n) => n.id === nbEtab);
+  const surDevis = Boolean(nb?.surDevis);
 
   const TOTAL_STEPS = 5;
   const canNext =
     (step === 1 && !!projet) ||
-    (step === 2 && modules.length > 0) ||
+    (step === 2 && !!formuleId) ||
     (step === 3 && !!taille) ||
     step === 4;
 
@@ -106,12 +101,12 @@ export function Configurateur() {
     setStatus('loading');
     setError('');
 
+    const prixTxt = formule && !surDevis ? euros(formule.prix) : 'sur devis';
     const recap = [
       labelProjet(projet) ? `Projet : ${labelProjet(projet)}` : '',
-      `Modules : ${labelsModules(modules).join(', ')}`,
+      formule ? `Formule : ${formule.nom} (${prixTxt})` : '',
       labelTaille(taille) ? `Taille : ${labelTaille(taille)}` : '',
       labelNbEtab(nbEtab) ? `Établissements : ${labelNbEtab(nbEtab)}` : '',
-      estimation && !estimation.surDevis ? `Estimation : ${euros(estimation.min)} à ${euros(estimation.max)}` : 'Estimation : sur devis',
     ]
       .filter(Boolean)
       .join('\n');
@@ -126,11 +121,11 @@ export function Configurateur() {
           telephone,
           ville,
           projet,
-          modules,
+          formule: formule?.nom,
           taille,
           nbEtablissements: nbEtab,
-          estimationMin: estimation && !estimation.surDevis ? estimation.min : undefined,
-          estimationMax: estimation && !estimation.surDevis ? estimation.max : undefined,
+          estimationMin: formule && !surDevis ? formule.prix : undefined,
+          estimationMax: formule && !surDevis ? formule.prix : undefined,
           message: recap,
           source: 'configurateur',
           consentementRGPD: 'true',
@@ -153,9 +148,9 @@ export function Configurateur() {
       <div className="container-r">
         <div className="max-w-2xl">
           <span className="eyebrow">Configurateur</span>
-          <h2 className="section-title mt-3">Estimez votre audit en 1 minute</h2>
+          <h2 className="section-title mt-3">Votre devis en 1 minute</h2>
           <p className="mt-3 text-lg text-ink/75">
-            Quatre questions, votre estimation s'affiche en direct. Le devis final reste personnalisé et sans engagement.
+            Quatre questions, votre tarif s'affiche en direct. Sans engagement.
           </p>
         </div>
 
@@ -179,19 +174,28 @@ export function Configurateur() {
                 )}
 
                 {step === 2 && (
-                  <Etape titre="Que voulez-vous auditer ?" hint="Tout est sélectionné par défaut (audit 360° complet).">
-                    <button
-                      type="button"
-                      onClick={toggleAll}
-                      className={`mb-3 inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-semibold transition-colors ${
-                        allOn ? 'border-orange bg-orange text-white' : 'border-ink/15 bg-white text-ink hover:border-orange/50'
-                      }`}
-                    >
-                      {allOn ? 'Audit 360° complet sélectionné' : 'Tout sélectionner (audit 360° complet)'}
-                    </button>
+                  <Etape titre="Quelle formule ?">
                     <div className="grid gap-2.5 sm:grid-cols-2">
-                      {MODULES.map((m) => (
-                        <Tuile key={m.id} check on={modules.includes(m.id)} onClick={() => toggleModule(m.id)} title={m.label} desc={m.desc} />
+                      {FORMULES.map((f) => (
+                        <button
+                          type="button"
+                          key={f.id}
+                          onClick={() => setFormuleId(f.id)}
+                          className={`relative rounded-2xl border-2 p-4 text-left transition-all active:scale-[0.99] ${
+                            formuleId === f.id ? 'border-orange bg-orange-50 ring-1 ring-orange/30' : 'border-ink/12 bg-white hover:border-orange/40'
+                          }`}
+                        >
+                          {f.populaire && (
+                            <span className="absolute -top-2.5 right-3 rounded-full bg-orange px-2 py-0.5 text-[10px] font-bold text-white">
+                              Le plus choisi
+                            </span>
+                          )}
+                          <div className="flex items-baseline justify-between gap-2">
+                            <span className="font-bold text-ink">{f.nom}</span>
+                            <span className="text-lg font-extrabold text-ink">{euros(f.prix)}</span>
+                          </div>
+                          <p className="mt-1 text-xs text-ink/75">{f.resume}</p>
+                        </button>
                       ))}
                     </div>
                   </Etape>
@@ -218,7 +222,7 @@ export function Configurateur() {
                 )}
 
                 {step === 5 && (
-                  <Etape titre="Recevez votre estimation détaillée">
+                  <Etape titre="Recevez votre devis">
                     <form onSubmit={submit} className="grid gap-3">
                       <div className="grid gap-3 sm:grid-cols-2">
                         <input value={nom} onChange={(e) => setNom(e.target.value)} placeholder="Nom *" className={inputCls} />
@@ -239,7 +243,7 @@ export function Configurateur() {
                       </label>
                       {status === 'error' && <p className="text-sm font-medium text-red-600">{error}</p>}
                       <button type="submit" disabled={status === 'loading'} className="btn-primary w-full disabled:opacity-60">
-                        {status === 'loading' ? 'Envoi…' : 'Recevoir mon estimation'}
+                        {status === 'loading' ? 'Envoi…' : 'Recevoir mon devis'}
                       </button>
                     </form>
                   </Etape>
@@ -273,38 +277,36 @@ export function Configurateur() {
             )}
           </div>
 
-          {/* Récap estimation */}
+          {/* Récap prix */}
           <div className="lg:sticky lg:top-24 lg:self-start">
             <div className="overflow-hidden rounded-3xl border border-ink/10 bg-ink text-white shadow-soft">
               <div className="border-b border-white/10 px-6 py-5">
-                <p className="text-xs font-semibold uppercase tracking-wide text-orange-300">Votre estimation</p>
-                {estimation && !estimation.surDevis ? (
+                <p className="text-xs font-semibold uppercase tracking-wide text-orange-300">Votre devis</p>
+                {formule && !surDevis ? (
                   <>
                     <div className="mt-2 flex items-baseline gap-2">
-                      <span className="text-3xl font-extrabold">{euros(estimation.min)}</span>
-                      <span className="text-white/50">à</span>
-                      <span className="text-3xl font-extrabold">{euros(estimation.max)}</span>
+                      <span className="text-4xl font-extrabold">{euros(formule.prix)}</span>
                     </div>
-                    <p className="mt-1 text-xs text-white/50">HT, estimation indicative</p>
+                    <p className="mt-1 text-xs text-white/50">{TVA_MENTION}</p>
                   </>
                 ) : (
-                  <p className="mt-2 text-2xl font-bold">{estimation?.surDevis ? 'Sur devis' : 'À configurer'}</p>
+                  <p className="mt-2 text-2xl font-bold">{surDevis ? 'Sur devis' : 'À configurer'}</p>
                 )}
               </div>
               <dl className="space-y-3 px-6 py-5 text-sm">
                 <Row label="Projet" value={labelProjet(projet)} />
-                <Row label="Périmètre" value={estimation?.complet ? 'Audit 360° complet' : modules.length ? `${modules.length} module(s)` : undefined} />
+                <Row label="Formule" value={formule?.nom} />
                 <Row label="Taille" value={labelTaille(taille)} />
                 <Row label="Établissements" value={labelNbEtab(nbEtab)} />
               </dl>
-              {estimation?.complet && (
+              {surDevis && (
                 <div className="mx-6 mb-4 rounded-xl bg-orange/15 px-4 py-2.5 text-xs font-semibold text-orange-200">
-                  Tarif dégressif appliqué : audit 360° complet.
+                  Plusieurs établissements : devis dégressif sur mesure.
                 </div>
               )}
             </div>
             <p className="mt-3 px-1 text-xs text-ink/60">
-              Estimation indicative calculée à partir de vos réponses. Le devis final est établi après échange. Paiement possible en plusieurs fois. Audit conseil privé et indépendant.
+              Tarif ferme pour un établissement. Paiement possible en plusieurs fois. auditresto360 n'est pas assujetti à la TVA (art. 293 B du CGI). Audit conseil privé et indépendant.
             </p>
           </div>
         </div>
@@ -327,11 +329,10 @@ function Progress({ step, total }: { step: number; total: number }) {
   );
 }
 
-function Etape({ titre, hint, children }: { titre: string; hint?: string; children: React.ReactNode }) {
+function Etape({ titre, children }: { titre: string; children: React.ReactNode }) {
   return (
     <div className="animate-fade-up">
       <h3 className="text-lg font-bold text-ink">{titre}</h3>
-      {hint && <p className="mt-1 text-sm text-ink/60">{hint}</p>}
       <div className="mt-4">{children}</div>
     </div>
   );
@@ -356,7 +357,7 @@ function Success() {
       </div>
       <h3 className="mt-4 text-xl font-bold text-ink">Demande envoyée</h3>
       <p className="mx-auto mt-2 max-w-md text-ink/75">
-        Merci. Nous vous recontactons rapidement avec votre estimation détaillée et les prochaines étapes pour planifier votre audit.
+        Merci. Nous vous recontactons rapidement pour confirmer votre devis et planifier votre audit.
       </p>
     </div>
   );

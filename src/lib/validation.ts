@@ -27,10 +27,7 @@ export const leadSchema = z.object({
     blankToUndef,
     z.enum(['EXPLOITATION', 'LANCEMENT', 'REPRISE', 'GROUPE']).optional()
   ),
-  modules: z.preprocess(
-    (v) => (Array.isArray(v) ? v : v == null ? [] : [v]),
-    z.array(z.string().max(40)).max(20)
-  ),
+  formule: optString(60),
   taille: optString(20),
   nbEtablissements: optString(10),
   estimationMin: optInt(),
