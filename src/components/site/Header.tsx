@@ -8,6 +8,7 @@ const NAV = [
   { href: '/#piliers', label: 'L’audit 360°' },
   { href: '/methode', label: 'Méthode' },
   { href: '/pour-qui', label: 'Pour qui' },
+  { href: '/blog', label: 'Blog' },
   { href: '/#tarifs', label: 'Tarifs' },
   { href: '/contact', label: 'Contact' },
 ];

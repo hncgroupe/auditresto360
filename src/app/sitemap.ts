@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { env } from '@/lib/env';
+import { getAllPostsMeta } from '@/lib/blog';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = env.siteUrl;
@@ -8,6 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/', priority: 1, freq: 'weekly' },
     { path: '/methode', priority: 0.9, freq: 'monthly' },
     { path: '/pour-qui', priority: 0.9, freq: 'monthly' },
+    { path: '/blog', priority: 0.8, freq: 'weekly' },
     { path: '/a-propos', priority: 0.6, freq: 'monthly' },
     { path: '/faq', priority: 0.7, freq: 'monthly' },
     { path: '/contact', priority: 0.7, freq: 'monthly' },
@@ -15,10 +17,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/confidentialite', priority: 0.2, freq: 'yearly' },
     { path: '/cgv', priority: 0.2, freq: 'yearly' },
   ];
-  return routes.map((r) => ({
+  const staticEntries: MetadataRoute.Sitemap = routes.map((r) => ({
     url: `${base}${r.path}`,
     lastModified: now,
     changeFrequency: r.freq,
     priority: r.priority,
   }));
+  const postEntries: MetadataRoute.Sitemap = getAllPostsMeta().map((p) => ({
+    url: `${base}/blog/${p.slug}`,
+    lastModified: new Date(p.date),
+    changeFrequency: 'monthly',
+    priority: 0.7,
+  }));
+  return [...staticEntries, ...postEntries];
 }
