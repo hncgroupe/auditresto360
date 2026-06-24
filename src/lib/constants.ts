@@ -27,6 +27,17 @@ export const TRUSTPILOT = {
   url: '' as string, // TODO : https://fr.trustpilot.com/review/auditresto360.fr
 } as const;
 
+/**
+ * Lead magnet : exemple de rapport d'audit à télécharger contre un email.
+ * fileUrl : vide pour l'instant. Dès qu'un PDF est déposé dans /public et l'URL
+ * renseignée ici, la rubrique propose un téléchargement direct ; sinon le document
+ * est annoncé comme envoyé par email.
+ */
+export const LEAD_MAGNET = {
+  titre: 'Exemple de rapport d’audit auditresto360',
+  fileUrl: '' as string, // TODO : '/exemple-rapport-auditresto360.pdf'
+} as const;
+
 /** Les 10 piliers de l'audit 360 (alignés sur la grille terrain auditresto360). */
 export const PILIERS_360 = [
   { code: 'P1', nom: 'Accueil & expérience client', icone: '🛎️' },

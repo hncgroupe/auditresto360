@@ -7,6 +7,7 @@ import { Expertise } from '@/components/marketing/Expertise';
 import { Deroule } from '@/components/marketing/Deroule';
 import { Configurateur } from '@/components/marketing/Configurateur';
 import { Tarifs } from '@/components/marketing/Tarifs';
+import { LeadMagnet } from '@/components/marketing/LeadMagnet';
 import { Faq } from '@/components/marketing/Faq';
 import { Groupe } from '@/components/marketing/Groupe';
 import { Conseiller } from '@/components/marketing/Conseiller';
@@ -31,6 +32,7 @@ export default function HomePage() {
       <Conseiller />
       <Configurateur />
       <Tarifs />
+      <LeadMagnet />
       <Faq />
       <Groupe />
       <CtaBand />
