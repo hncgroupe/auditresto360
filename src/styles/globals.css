@@ -1,0 +1,100 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --orange: #ff7a00;
+  --ink: #0a0a0a;
+  --gris: #6b7280;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+*,
+input,
+button,
+textarea,
+select,
+optgroup {
+  font-family: inherit;
+}
+
+body {
+  color: var(--ink);
+  background: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3 {
+  letter-spacing: -0.025em;
+}
+h1 {
+  letter-spacing: -0.035em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@layer components {
+  .container-r {
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+  }
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-orange px-6 py-3 font-semibold text-white transition-all duration-200 hover:bg-orange-600 hover:shadow-glow active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-700;
+  }
+  .btn-dark {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-ink px-6 py-3 font-semibold text-white transition-all duration-200 hover:bg-ink-light active:scale-[0.98];
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-ink/10 bg-white px-6 py-3 font-semibold text-ink transition-all duration-200 hover:border-orange/50 hover:text-orange-700 hover:shadow-card active:scale-[0.98];
+  }
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.1em] text-orange-600;
+  }
+  .card-hover {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-soft;
+  }
+  .section-title {
+    @apply font-extrabold text-ink;
+    font-size: clamp(1.9rem, 1.3rem + 2vw, 2.6rem);
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+  }
+}
+
+@layer utilities {
+  /* Dégradé signature : halo orange chaud. */
+  .aurora {
+    background:
+      radial-gradient(60% 50% at 82% -5%, rgba(255, 122, 0, 0.18) 0%, rgba(255, 122, 0, 0) 60%),
+      radial-gradient(48% 48% at 0% 18%, rgba(255, 146, 38, 0.12) 0%, rgba(255, 146, 38, 0) 55%),
+      linear-gradient(180deg, #fff7f0 0%, #ffffff 62%);
+  }
+  .grid-faint {
+    background-image:
+      linear-gradient(to right, rgba(10, 10, 10, 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(10, 10, 10, 0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+  .text-gradient-orange {
+    background: linear-gradient(120deg, #c25500 0%, #ff7a00 50%, #ff9226 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}

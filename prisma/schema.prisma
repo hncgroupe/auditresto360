@@ -1,0 +1,62 @@
+// auditresto360 — schéma Prisma (site d'acquisition).
+// Base propre à auditresto360 (séparée d'audithygiène).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum LeadStatus {
+  NOUVEAU
+  CONTACTE
+  RDV_PRIS
+  DEVIS_ENVOYE
+  CONVERTI
+  PERDU
+}
+
+/// Contexte du projet (étape 1 du configurateur).
+enum ProjetType {
+  EXPLOITATION // restaurant en activité
+  LANCEMENT // ouverture / création
+  REPRISE // rachat / reprise
+  GROUPE // groupe, multi-sites, franchise
+}
+
+/// Lead issu du configurateur ou d'un formulaire de contact.
+model Lead {
+  id String @id @default(cuid())
+
+  nom       String
+  email     String
+  telephone String?
+  ville     String?
+  codePostal String?
+
+  // Qualification (configurateur)
+  projet            ProjetType?
+  modules           String[] @default([]) // modules d'audit sélectionnés
+  taille            String? // PETIT / STANDARD / GRAND
+  nbEtablissements  String? // 1 / 2-3 / 4-9 / 10+
+  estimationMin     Int? // fourchette basse (€)
+  estimationMax     Int? // fourchette haute (€)
+
+  message String?
+  source  String? @default("site") // configurateur, contact, ...
+  statut  LeadStatus @default(NOUVEAU)
+
+  consentementRGPD      Boolean   @default(false)
+  consentementMarketing Boolean   @default(false)
+  consentementAt        DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([statut])
+  @@index([createdAt])
+  @@map("leads")
+}

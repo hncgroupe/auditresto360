@@ -1,0 +1,24 @@
+# auditresto360
+
+> auditresto360 réalise l'audit 360° complet et indépendant des restaurants et groupes de restauration en France. L'audit couvre 10 piliers : accueil et expérience client, cuisine et production, réserve et stockage, hygiène HACCP et conformité, ressources humaines, performance opérationnelle, gestion et comptabilité, développement commercial, outils et pilotage, et la vision du dirigeant. Le client reçoit un rapport noté (score global et par pilier), les cas critiques signalés à part, et un plan d'action priorisé.
+
+## Ce que nous proposons
+- Audit 360° complet d'un restaurant (les 10 piliers en une intervention)
+- Modules ciblés : hygiène et HACCP, ressources humaines, gestion et comptabilité, carte et rentabilité, commercial et digital, expérience client, cuisine, pilotage
+- Audit pour restaurateurs indépendants, ouvertures/créations, reprises/rachats, groupes et franchises (multi-sites)
+
+## Méthode
+- Chaque critère est noté de 1 à 5 ; le score d'un pilier est une moyenne pondérée où les critères critiques (sanitaires/réglementaires) comptent double.
+- Les non-conformités à impact sanitaire ou réglementaire sont signalées distinctement et ne sont jamais noyées dans la note globale.
+- Ancrage réglementaire : Paquet hygiène, règlement CE 852/2004, arrêté du 21/12/2009, règlement INCO (UE) 1169/2011.
+
+## Tarifs
+- Le prix dépend du périmètre (audit complet ou modules ciblés), de la taille de l'établissement et du nombre de restaurants.
+- Un configurateur en ligne fournit une estimation indicative ; le devis final est personnalisé. Paiement en plusieurs fois possible.
+
+## Cadre
+auditresto360 est un audit conseil privé et indépendant. Il ne constitue ni une certification officielle, ni un agrément d'État, ni un contrôle des services vétérinaires ou de la DDPP. Le rapport aide à anticiper un contrôle sanitaire, sans en garantir le résultat.
+
+## Contact
+- Site : https://auditresto360.fr
+- Email : contact@auditresto360.fr
