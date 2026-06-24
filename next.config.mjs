@@ -20,6 +20,13 @@ const nextConfig = {
         destination: 'https://auditresto360.fr/:path*',
         permanent: true,
       },
+      // www → apex (canonique)
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'www.auditresto360.fr' }],
+        destination: 'https://auditresto360.fr/:path*',
+        permanent: true,
+      },
     ];
   },
 };
