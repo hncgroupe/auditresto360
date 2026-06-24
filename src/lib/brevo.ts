@@ -5,6 +5,8 @@ interface SendEmailParams {
   to: { email: string; name?: string } | { email: string; name?: string }[];
   subject: string;
   htmlContent: string;
+  /** Pièces jointes par URL publique (Brevo les télécharge et les joint). */
+  attachments?: { url: string; name: string }[];
 }
 
 export async function sendTransactionalEmail(params: SendEmailParams): Promise<boolean> {
@@ -26,6 +28,9 @@ export async function sendTransactionalEmail(params: SendEmailParams): Promise<b
         to,
         subject: params.subject,
         htmlContent: params.htmlContent,
+        ...(params.attachments?.length
+          ? { attachment: params.attachments.map((a) => ({ url: a.url, name: a.name })) }
+          : {}),
       }),
     });
     if (!res.ok) {
@@ -142,6 +147,37 @@ export function leadConfirmationEmail(nom: string): { subject: string; htmlConte
   return {
     subject: `Merci ${prenom}, votre demande d'audit est bien reçue`,
     htmlContent,
+  };
+}
+
+/** Email du lead magnet : envoi de l'exemple de rapport (en pièce jointe + lien). */
+export function leadMagnetEmail(downloadUrl?: string): { subject: string; htmlContent: string } {
+  const logo = `${env.siteUrl}/logo-auditresto360.png`;
+  const cta = downloadUrl
+    ? `<table role="presentation" cellpadding="0" cellspacing="0" align="center" style="margin:22px auto 4px auto;"><tr><td style="background:#FF7A00;border-radius:999px;" align="center"><a href="${downloadUrl}" style="display:inline-block;padding:13px 28px;font-family:Arial,Helvetica,sans-serif;font-size:15px;font-weight:700;color:#ffffff;text-decoration:none;">Télécharger l'exemple de rapport</a></td></tr></table>`
+    : '';
+  return {
+    subject: 'Votre exemple de rapport auditresto360',
+    htmlContent: `
+  <!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+  <body style="margin:0;padding:0;background:#F4F4F5;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#F4F4F5;padding:28px 12px;"><tr><td align="center">
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:600px;max-width:100%;background:#ffffff;border-radius:18px;overflow:hidden;box-shadow:0 4px 24px -10px rgba(10,10,10,0.18);">
+        <tr><td style="padding:30px 32px 6px 32px;" align="center"><img src="${logo}" alt="auditresto360" height="42" style="height:42px;width:auto;border:0;display:inline-block;"></td></tr>
+        <tr><td style="padding:18px 32px 8px 32px;font-family:'Poppins',Arial,Helvetica,sans-serif;color:#0A0A0A;" align="center">
+          <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#C25500;">Votre document</div>
+          <h1 style="font-size:24px;font-weight:800;margin:8px 0 0 0;">Voici votre exemple de rapport</h1>
+          <p style="font-size:15px;line-height:1.6;color:#3F3F46;margin:14px 0 0 0;">${downloadUrl ? "Vous trouverez l'exemple de rapport d'audit en pièce jointe et via le bouton ci-dessous." : "Nous vous adressons l'exemple de rapport d'audit très prochainement."} Il vous montre la notation par pilier, les points critiques et le plan d'action que vous remet auditresto360.</p>
+          ${cta}
+          <p style="font-size:14px;line-height:1.6;color:#3F3F46;margin:18px 0 0 0;">Envie d'un audit de votre établissement ? Estimez-le en une minute.</p>
+          <table role="presentation" cellpadding="0" cellspacing="0" align="center" style="margin:14px auto 4px auto;"><tr><td style="border:1.5px solid #FF7A00;border-radius:999px;" align="center"><a href="${env.siteUrl}/#configurateur" style="display:inline-block;padding:11px 24px;font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:700;color:#C25500;text-decoration:none;">Estimer mon audit</a></td></tr></table>
+        </td></tr>
+        <tr><td style="padding:16px 32px 28px 32px;"><div style="height:1px;background:#EDEDF0;margin-bottom:16px;"></div>
+          <p style="margin:0;font-size:11px;line-height:1.6;color:#9AA1AB;">auditresto360 est un audit conseil privé et indépendant. Il ne constitue ni une certification officielle, ni un agrément d'État, ni un contrôle des services vétérinaires/DDPP.</p>
+        </td></tr>
+      </table>
+    </td></tr></table>
+  </body></html>`,
   };
 }
 

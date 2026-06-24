@@ -2,8 +2,9 @@ import { NextResponse } from 'next/server';
 import { leadSchema } from '@/lib/validation';
 import { env } from '@/lib/env';
 import { notifyTelegram, formatLeadMessage } from '@/lib/telegram';
-import { sendTransactionalEmail, leadConfirmationEmail } from '@/lib/brevo';
+import { sendTransactionalEmail, leadConfirmationEmail, leadMagnetEmail } from '@/lib/brevo';
 import { euros, labelProjet, labelTaille } from '@/lib/config';
+import { LEAD_MAGNET } from '@/lib/constants';
 
 export const runtime = 'nodejs';
 
@@ -81,13 +82,24 @@ export async function POST(request: Request) {
     })
   ).catch(() => false);
 
-  // 3. Email de confirmation au lead (non bloquant).
-  const tpl = leadConfirmationEmail(data.nom);
-  await sendTransactionalEmail({
-    to: { email: data.email, name: data.nom },
-    subject: tpl.subject,
-    htmlContent: tpl.htmlContent,
-  }).catch(() => false);
+  // 3. Email au lead (non bloquant). Lead magnet = envoi de l'exemple de rapport.
+  if (data.source === 'lead-magnet') {
+    const fileUrl = LEAD_MAGNET.fileUrl ? `${env.siteUrl}${LEAD_MAGNET.fileUrl}` : undefined;
+    const tpl = leadMagnetEmail(fileUrl);
+    await sendTransactionalEmail({
+      to: { email: data.email, name: data.nom },
+      subject: tpl.subject,
+      htmlContent: tpl.htmlContent,
+      attachments: fileUrl ? [{ url: fileUrl, name: 'exemple-rapport-auditresto360.pdf' }] : undefined,
+    }).catch(() => false);
+  } else {
+    const tpl = leadConfirmationEmail(data.nom);
+    await sendTransactionalEmail({
+      to: { email: data.email, name: data.nom },
+      subject: tpl.subject,
+      htmlContent: tpl.htmlContent,
+    }).catch(() => false);
+  }
 
   return NextResponse.json({ ok: true });
 }
