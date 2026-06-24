@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { env } from '@/lib/env';
-import { getAllPostsMeta } from '@/lib/blog';
+import { getAllPostsMeta, getCategories } from '@/lib/blog';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = env.siteUrl;
@@ -29,5 +29,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: 'monthly',
     priority: 0.7,
   }));
-  return [...staticEntries, ...postEntries];
+  const categoryEntries: MetadataRoute.Sitemap = getCategories().map((c) => ({
+    url: `${base}/blog/categorie/${c.slug}`,
+    lastModified: now,
+    changeFrequency: 'weekly',
+    priority: 0.6,
+  }));
+  return [...staticEntries, ...postEntries, ...categoryEntries];
 }

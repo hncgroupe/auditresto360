@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Faq } from '@/components/marketing/Faq';
 import { CtaBand } from '@/components/marketing/CtaBand';
 import { JsonLd } from '@/components/site/JsonLd';
-import { faqSchema } from '@/lib/schema';
+import { faqSchema, breadcrumbSchema } from '@/lib/schema';
 import { FAQ_ITEMS } from '@/lib/faq';
 
 export const metadata: Metadata = {
@@ -16,6 +16,7 @@ export default function FaqPage() {
   return (
     <>
       <JsonLd data={faqSchema(FAQ_ITEMS)} />
+      <JsonLd data={breadcrumbSchema([{ name: 'Accueil', path: '/' }, { name: 'FAQ', path: '/faq' }])} />
       <section className="aurora">
         <div className="container-r py-16">
           <span className="eyebrow">FAQ</span>

@@ -90,6 +90,40 @@ export function getAllSlugs(): string[] {
   return listFiles().map((f) => f.replace(/\.md$/, ''));
 }
 
+/** Slug d'une catégorie (pour les URL /blog/categorie/[slug]). */
+export function categorySlug(name: string): string {
+  return name
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .replace(/&/g, 'et')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+}
+
+export interface CategoryInfo {
+  name: string;
+  slug: string;
+  count: number;
+}
+
+/** Liste des catégories présentes, avec leur nombre d'articles. */
+export function getCategories(): CategoryInfo[] {
+  const map = new Map<string, number>();
+  for (const p of getAllPostsMeta()) map.set(p.category, (map.get(p.category) ?? 0) + 1);
+  return [...map.entries()]
+    .map(([name, count]) => ({ name, slug: categorySlug(name), count }))
+    .sort((a, b) => b.count - a.count);
+}
+
+export function getCategoryBySlug(slug: string): CategoryInfo | null {
+  return getCategories().find((c) => c.slug === slug) ?? null;
+}
+
+export function getPostsByCategory(name: string): PostMeta[] {
+  return getAllPostsMeta().filter((p) => p.category === name);
+}
+
 /** Articles liés : même catégorie d'abord, complétés par les plus récents. */
 export function getRelated(slug: string, n = 3): PostMeta[] {
   const all = getAllPostsMeta();

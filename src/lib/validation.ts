@@ -1,9 +1,10 @@
 import { z } from 'zod';
 
-/** Coercition checkbox HTML ("true" / "on" / boolean / undefined). */
-const checkbox = z
-  .union([z.literal('true'), z.literal('on'), z.boolean(), z.undefined()])
-  .transform((v) => v === true || v === 'true' || v === 'on');
+/** Coercition checkbox HTML : "true"/"on"/true → true ; tout le reste (""/undefined/...) → false. */
+const checkbox = z.preprocess(
+  (v) => v === true || v === 'true' || v === 'on',
+  z.boolean()
+);
 
 /** "" ou null → undefined avant validation. */
 const blankToUndef = (v: unknown) => (v === '' || v === null ? undefined : v);

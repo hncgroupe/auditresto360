@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import { CtaBand } from '@/components/marketing/CtaBand';
+import { JsonLd } from '@/components/site/JsonLd';
+import { breadcrumbSchema } from '@/lib/schema';
 
 export const metadata: Metadata = {
   title: 'À propos',
@@ -11,6 +13,7 @@ export const metadata: Metadata = {
 export default function AProposPage() {
   return (
     <>
+      <JsonLd data={breadcrumbSchema([{ name: 'Accueil', path: '/' }, { name: 'À propos', path: '/a-propos' }])} />
       <section className="aurora">
         <div className="container-r py-16 lg:py-20">
           <span className="eyebrow">À propos</span>

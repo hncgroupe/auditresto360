@@ -40,7 +40,9 @@ export async function POST(request: Request) {
       ? `${euros(data.estimationMin)} à ${euros(data.estimationMax)}`
       : null;
 
-  // 1. Enregistrement en base (si configurée).
+  // 1. Enregistrement en base (CRM mutualisé audithygiène : table "leads").
+  // On n'écrit que les colonnes existantes ; les détails du configurateur
+  // (projet, modules, taille, estimation) sont déjà résumés dans `message`.
   if (env.isDatabaseConfigured) {
     try {
       const { prisma } = await import('@/lib/prisma');
@@ -51,14 +53,9 @@ export async function POST(request: Request) {
           telephone: data.telephone,
           ville: data.ville,
           codePostal: data.codePostal,
-          projet: data.projet,
-          modules: data.modules,
-          taille: data.taille,
-          nbEtablissements: data.nbEtablissements,
-          estimationMin: data.estimationMin,
-          estimationMax: data.estimationMax,
           message: data.message,
-          source: data.source ?? 'site',
+          // Préfixe resto360 pour distinguer la source dans le CRM partagé.
+          source: `resto360:${data.source ?? 'site'}`,
           consentementRGPD: true,
           consentementAt: new Date(),
           consentementMarketing: Boolean(data.consentementMarketing),

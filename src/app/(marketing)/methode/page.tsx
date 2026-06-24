@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { Deroule } from '@/components/marketing/Deroule';
 import { Piliers } from '@/components/marketing/Piliers';
 import { CtaBand } from '@/components/marketing/CtaBand';
+import { JsonLd } from '@/components/site/JsonLd';
+import { breadcrumbSchema } from '@/lib/schema';
 
 export const metadata: Metadata = {
   title: 'Notre méthode d’audit 360°',
@@ -14,6 +16,7 @@ export const metadata: Metadata = {
 export default function MethodePage() {
   return (
     <>
+      <JsonLd data={breadcrumbSchema([{ name: 'Accueil', path: '/' }, { name: 'Méthode', path: '/methode' }])} />
       <section className="aurora">
         <div className="container-r py-16 lg:py-20">
           <span className="eyebrow">La méthode</span>

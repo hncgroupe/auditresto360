@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
-import { getAllPostsMeta } from '@/lib/blog';
+import { getAllPostsMeta, getCategories } from '@/lib/blog';
 import { CtaBand } from '@/components/marketing/CtaBand';
+import { JsonLd } from '@/components/site/JsonLd';
+import { breadcrumbSchema } from '@/lib/schema';
 
 export const metadata: Metadata = {
   title: 'Blog : conseils experts pour restaurateurs',
@@ -21,10 +23,12 @@ function fmtDate(iso: string): string {
 
 export default function BlogIndex() {
   const posts = getAllPostsMeta();
+  const cats = getCategories();
   const [featured, ...rest] = posts;
 
   return (
     <>
+      <JsonLd data={breadcrumbSchema([{ name: 'Accueil', path: '/' }, { name: 'Blog', path: '/blog' }])} />
       <section className="aurora">
         <div className="container-r py-16">
           <span className="eyebrow">Le blog</span>
@@ -36,6 +40,20 @@ export default function BlogIndex() {
       </section>
 
       <section className="container-r py-12">
+        {cats.length > 0 && (
+          <div className="mb-8 flex flex-wrap gap-2">
+            <span className="rounded-full border border-orange bg-orange px-3.5 py-1.5 text-sm font-semibold text-white">Tout</span>
+            {cats.map((c) => (
+              <Link
+                key={c.slug}
+                href={`/blog/categorie/${c.slug}`}
+                className="rounded-full border border-ink/12 px-3.5 py-1.5 text-sm font-semibold text-ink/70 transition-colors hover:border-orange/50 hover:text-orange-700"
+              >
+                {c.name} <span className="text-ink/40">{c.count}</span>
+              </Link>
+            ))}
+          </div>
+        )}
         {posts.length === 0 ? (
           <p className="text-ink/70">Les premiers articles arrivent très bientôt.</p>
         ) : (

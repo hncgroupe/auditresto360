@@ -19,6 +19,51 @@
 ## Cadre
 auditresto360 est un audit conseil privé et indépendant. Il ne constitue ni une certification officielle, ni un agrément d'État, ni un contrôle des services vétérinaires ou de la DDPP. Le rapport aide à anticiper un contrôle sanitaire, sans en garantir le résultat.
 
+## Guides experts (blog)
+Articles complets et sourcés pour restaurateurs (réglementation, gestion, RH, commercial) :
+
+Hygiène & HACCP
+- Plan de Maîtrise Sanitaire (PMS) : https://auditresto360.fr/blog/plan-maitrise-sanitaire-restaurant
+- Méthode HACCP, les 7 principes : https://auditresto360.fr/blog/methode-haccp-restauration-7-principes
+- Températures de conservation : https://auditresto360.fr/blog/temperatures-conservation-restaurant
+- Traçabilité alimentaire : https://auditresto360.fr/blog/tracabilite-alimentaire-restaurant
+- Plan de nettoyage et désinfection : https://auditresto360.fr/blog/plan-nettoyage-desinfection-restaurant
+- Marche en avant en cuisine : https://auditresto360.fr/blog/marche-en-avant-cuisine
+- Lutte contre les nuisibles : https://auditresto360.fr/blog/lutte-nuisibles-restaurant
+
+Conformité
+- Réussir un contrôle sanitaire (DDPP) : https://auditresto360.fr/blog/reussir-controle-sanitaire-ddpp
+- Affichages obligatoires : https://auditresto360.fr/blog/affichages-obligatoires-restaurant
+- Allergènes, obligations d'information : https://auditresto360.fr/blog/allergenes-restaurant-obligations
+
+Gestion & rentabilité
+- Food cost et coût matière : https://auditresto360.fr/blog/food-cost-cout-matiere-restaurant
+- Marge brute : https://auditresto360.fr/blog/marge-brute-restaurant
+- Menu engineering : https://auditresto360.fr/blog/menu-engineering-optimiser-carte
+- Gestion des stocks et inventaire : https://auditresto360.fr/blog/gestion-stocks-inventaire-restaurant
+- Réduire le gaspillage alimentaire : https://auditresto360.fr/blog/reduire-gaspillage-alimentaire-restaurant
+- Fixer ses prix de vente : https://auditresto360.fr/blog/fixer-prix-vente-restaurant-coefficient
+- Tableau de bord et KPI : https://auditresto360.fr/blog/tableau-de-bord-kpi-restaurant
+- Gestion de caisse et trésorerie : https://auditresto360.fr/blog/gestion-caisse-tresorerie-restaurant
+
+Ressources humaines
+- Recruter et fidéliser : https://auditresto360.fr/blog/recruter-fideliser-personnel-restaurant
+- Plannings et droit du travail (HCR) : https://auditresto360.fr/blog/planning-droit-travail-restauration-hcr
+- Former et intégrer son équipe : https://auditresto360.fr/blog/former-integrer-equipe-restaurant
+- Réduire le turnover : https://auditresto360.fr/blog/reduire-turnover-restauration
+- Management en coup de feu : https://auditresto360.fr/blog/management-equipe-coup-de-feu
+
+Commercial & digital
+- Optimiser Uber Eats et Deliveroo : https://auditresto360.fr/blog/optimiser-uber-eats-deliveroo
+- Avis Google et e-réputation : https://auditresto360.fr/blog/avis-google-e-reputation-restaurant
+- Augmenter le ticket moyen : https://auditresto360.fr/blog/augmenter-ticket-moyen-restaurant
+- Fidélisation client : https://auditresto360.fr/blog/fidelisation-client-restaurant
+
+Projets & développement
+- Ouvrir un restaurant (checklist) : https://auditresto360.fr/blog/ouvrir-restaurant-checklist-conformite
+- Reprendre / racheter un restaurant : https://auditresto360.fr/blog/reprendre-racheter-restaurant-audit
+- Développer une franchise : https://auditresto360.fr/blog/developper-franchise-restauration
+
 ## Contact
 - Site : https://auditresto360.fr
 - Email : contact@auditresto360.fr

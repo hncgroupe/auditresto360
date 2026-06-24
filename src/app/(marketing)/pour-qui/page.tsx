@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { PourQui } from '@/components/marketing/PourQui';
 import { Configurateur } from '@/components/marketing/Configurateur';
 import { CtaBand } from '@/components/marketing/CtaBand';
+import { JsonLd } from '@/components/site/JsonLd';
+import { breadcrumbSchema } from '@/lib/schema';
 
 export const metadata: Metadata = {
   title: 'Pour qui : indépendant, ouverture, reprise, groupe',
@@ -13,6 +15,7 @@ export const metadata: Metadata = {
 export default function PourQuiPage() {
   return (
     <>
+      <JsonLd data={breadcrumbSchema([{ name: 'Accueil', path: '/' }, { name: 'Pour qui', path: '/pour-qui' }])} />
       <section className="aurora">
         <div className="container-r py-16 lg:py-20">
           <span className="eyebrow">Pour qui</span>
