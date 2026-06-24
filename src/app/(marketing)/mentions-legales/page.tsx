@@ -20,7 +20,7 @@ export default function MentionsPage() {
         RCS Paris 985 221 324 - Code APE 70.22Z.<br />
         TVA : non applicable, article 293 B du CGI.<br />
         Email : {MARQUE.email}.<br />
-        Directrice de la publication : Vanessa Chaboz, présidente.
+        Directeur de la publication : le représentant légal de HNC.
       </p>
 
       <h2 className="text-lg font-bold text-ink">Hébergement</h2>
