@@ -78,12 +78,13 @@ h1 {
 }
 
 @layer utilities {
-  /* Dégradé signature : halo orange chaud. */
+  /* Dégradé signature : halo orange chaud, bien visible derrière le header transparent. */
   .aurora {
     background:
-      radial-gradient(60% 50% at 82% -5%, rgba(255, 122, 0, 0.18) 0%, rgba(255, 122, 0, 0) 60%),
-      radial-gradient(48% 48% at 0% 18%, rgba(255, 146, 38, 0.12) 0%, rgba(255, 146, 38, 0) 55%),
-      linear-gradient(180deg, #fff7f0 0%, #ffffff 62%);
+      radial-gradient(100% 70% at 50% -15%, rgba(255, 122, 0, 0.22) 0%, rgba(255, 122, 0, 0) 55%),
+      radial-gradient(55% 45% at 88% -5%, rgba(255, 146, 38, 0.20) 0%, rgba(255, 146, 38, 0) 60%),
+      radial-gradient(50% 50% at 2% 12%, rgba(255, 173, 92, 0.16) 0%, rgba(255, 173, 92, 0) 55%),
+      linear-gradient(180deg, #ffe9d3 0%, #fff4e9 35%, #ffffff 75%);
   }
   .grid-faint {
     background-image:
