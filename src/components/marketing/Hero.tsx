@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { TrustpilotBadge } from './TrustpilotBadge';
 
 export function Hero() {
   return (
@@ -22,6 +23,7 @@ export function Hero() {
               Voir la méthode
             </Link>
           </div>
+          <TrustpilotBadge className="mt-6" />
           <dl className="mt-10 grid max-w-lg grid-cols-3 gap-4">
             {[
               { n: '10', l: 'piliers analysés' },

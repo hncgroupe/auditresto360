@@ -86,8 +86,8 @@ export function leadConfirmationEmail(nom: string): { subject: string; htmlConte
         <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:600px;max-width:100%;background:#ffffff;border-radius:18px;overflow:hidden;box-shadow:0 4px 24px -10px rgba(10,10,10,0.18);">
 
           <!-- En-tete logo -->
-          <tr><td style="padding:30px 32px 0 32px;" align="left">
-            <img src="${logo}" alt="auditresto360" height="30" style="height:30px;width:auto;border:0;display:block;">
+          <tr><td style="padding:30px 32px 6px 32px;" align="center">
+            <img src="${logo}" alt="auditresto360" height="42" style="height:42px;width:auto;border:0;display:inline-block;margin:0 auto;">
           </td></tr>
 
           <!-- Bandeau confirmation -->
@@ -115,9 +115,9 @@ export function leadConfirmationEmail(nom: string): { subject: string; htmlConte
             <div>${piliers}</div>
 
             <!-- CTA -->
-            <table role="presentation" cellpadding="0" cellspacing="0" style="margin:26px 0 6px 0;"><tr>
-              <td style="background:#FF7A00;border-radius:999px;">
-                <a href="${env.siteUrl}/#configurateur" style="display:inline-block;padding:13px 26px;font-family:Arial,Helvetica,sans-serif;font-size:15px;font-weight:700;color:#ffffff;text-decoration:none;">Voir mon estimation</a>
+            <table role="presentation" cellpadding="0" cellspacing="0" align="center" style="margin:28px auto 6px auto;"><tr>
+              <td style="background:#FF7A00;border-radius:999px;" align="center">
+                <a href="${env.siteUrl}/#configurateur" style="display:inline-block;padding:13px 28px;font-family:Arial,Helvetica,sans-serif;font-size:15px;font-weight:700;color:#ffffff;text-decoration:none;">Voir mon estimation</a>
               </td>
             </tr></table>
           </td></tr>

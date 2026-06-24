@@ -9,6 +9,7 @@ import { Configurateur } from '@/components/marketing/Configurateur';
 import { Tarifs } from '@/components/marketing/Tarifs';
 import { Faq } from '@/components/marketing/Faq';
 import { Groupe } from '@/components/marketing/Groupe';
+import { Conseiller } from '@/components/marketing/Conseiller';
 import { CtaBand } from '@/components/marketing/CtaBand';
 import { StickyCta } from '@/components/marketing/StickyCta';
 import { JsonLd } from '@/components/site/JsonLd';
@@ -27,6 +28,7 @@ export default function HomePage() {
       <Expertise />
       <PourQui />
       <Deroule />
+      <Conseiller />
       <Configurateur />
       <Tarifs />
       <Faq />

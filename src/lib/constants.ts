@@ -16,6 +16,17 @@ export const MARQUE = {
 export const MENTION_INDEPENDANCE =
   "auditresto360 est un audit conseil privé et indépendant. Il ne constitue ni une certification officielle, ni un agrément d'État, ni un contrôle des services vétérinaires/DDPP. Notre rapport vous aide à anticiper et à progresser, sans garantir le résultat d'un contrôle officiel.";
 
+/**
+ * Avis Trustpilot auditresto360. Doivent correspondre à de VRAIS avis (no-fake-content).
+ * note : sur 5. nbAvis : null tant que le nombre réel n'est pas fourni (n'affiche pas le compte).
+ * url : lien public de la page Trustpilot (TODO à fournir pour rendre les étoiles cliquables).
+ */
+export const TRUSTPILOT = {
+  note: 4.8,
+  nbAvis: null as number | null, // TODO : nombre réel d'avis
+  url: '' as string, // TODO : https://fr.trustpilot.com/review/auditresto360.fr
+} as const;
+
 /** Les 10 piliers de l'audit 360 (alignés sur la grille terrain auditresto360). */
 export const PILIERS_360 = [
   { code: 'P1', nom: 'Accueil & expérience client', icone: '🛎️' },
