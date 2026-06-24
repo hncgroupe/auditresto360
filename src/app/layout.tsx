@@ -12,7 +12,8 @@ const poppins = Poppins({
   variable: '--font-poppins',
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://auditresto360.fr';
+// `||` (et non `??`) pour retomber sur le domaine même si la variable est définie mais vide.
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://auditresto360.fr';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
