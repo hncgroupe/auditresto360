@@ -28,7 +28,7 @@ export function Logo({ className = '', dark = false }: { className?: string; dar
         width={520}
         height={96}
         priority
-        className="h-[30px] w-auto"
+        className="h-[36px] w-auto"
       />
     </Link>
   );
