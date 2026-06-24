@@ -8,6 +8,7 @@ import { Deroule } from '@/components/marketing/Deroule';
 import { Configurateur } from '@/components/marketing/Configurateur';
 import { Tarifs } from '@/components/marketing/Tarifs';
 import { Faq } from '@/components/marketing/Faq';
+import { Groupe } from '@/components/marketing/Groupe';
 import { CtaBand } from '@/components/marketing/CtaBand';
 import { StickyCta } from '@/components/marketing/StickyCta';
 import { JsonLd } from '@/components/site/JsonLd';
@@ -29,6 +30,7 @@ export default function HomePage() {
       <Configurateur />
       <Tarifs />
       <Faq />
+      <Groupe />
       <CtaBand />
       <StickyCta />
     </>

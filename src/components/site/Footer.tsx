@@ -12,6 +12,16 @@ export function Footer() {
           <p className="mt-4 text-sm text-white/60">
             L’audit 360° du restaurant : hygiène, RH, conformité, gestion et développement. Audit conseil privé et indépendant, partout en France.
           </p>
+          <div className="mt-5 rounded-xl border border-white/10 bg-white/5 p-4">
+            <p className="text-xs font-semibold text-white">Le groupe</p>
+            <p className="mt-1 text-xs text-white/60">
+              auditresto360 et{' '}
+              <a href="https://audithygiene.fr" className="font-semibold text-orange hover:underline" target="_blank" rel="noopener">
+                audit hygiène
+              </a>{' '}
+              font partie du même groupe. audit hygiène est notre cabinet spécialisé dans l’audit hygiène et HACCP des restaurants.
+            </p>
+          </div>
         </div>
 
         <div>
