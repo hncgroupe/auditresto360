@@ -14,14 +14,13 @@ export default function MentionsPage() {
     <LegalLayout titre="Mentions légales">
       <h2 className="text-lg font-bold text-ink">Éditeur du site</h2>
       <p>
-        auditresto360{/* TODO : raison sociale exacte */}.<br />
-        Forme juridique : TODO.<br />
-        Capital social : TODO.<br />
-        Siège social : TODO.<br />
-        SIREN / SIRET : TODO.<br />
-        Numéro de TVA intracommunautaire : TODO.<br />
+        Le site auditresto360 est édité par <strong>HNC</strong>, société par actions simplifiée (SAS).<br />
+        Siège social : 26 rue Bosquet, 75007 Paris, France.<br />
+        SIREN : 985 221 324 - SIRET (siège) : 985 221 324 00017.<br />
+        RCS Paris 985 221 324 - Code APE 70.22Z.<br />
+        TVA : non applicable, article 293 B du CGI.<br />
         Email : {MARQUE.email}.<br />
-        Directeur de la publication : TODO.
+        Directrice de la publication : Vanessa Chaboz, présidente.
       </p>
 
       <h2 className="text-lg font-bold text-ink">Hébergement</h2>
