@@ -16,7 +16,7 @@ export default function PourQuiPage() {
   return (
     <>
       <JsonLd data={breadcrumbSchema([{ name: 'Accueil', path: '/' }, { name: 'Pour qui', path: '/pour-qui' }])} />
-      <section className="aurora">
+      <section className="-mt-[72px] pt-[72px] aurora">
         <div className="container-r py-16 lg:py-20">
           <span className="eyebrow">Pour qui</span>
           <h1 className="section-title mt-3 max-w-3xl">Un audit pensé pour chaque situation</h1>

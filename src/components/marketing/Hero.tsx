@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden aurora">
+    <section className="relative -mt-[72px] overflow-hidden pt-[72px] aurora">
       <div className="absolute inset-0 -z-10 grid-faint opacity-60" aria-hidden="true" />
       <div className="container-r grid items-center gap-12 py-16 lg:grid-cols-[1.05fr_0.95fr] lg:py-24">
         <div>

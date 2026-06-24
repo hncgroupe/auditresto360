@@ -17,7 +17,7 @@ export default function FaqPage() {
     <>
       <JsonLd data={faqSchema(FAQ_ITEMS)} />
       <JsonLd data={breadcrumbSchema([{ name: 'Accueil', path: '/' }, { name: 'FAQ', path: '/faq' }])} />
-      <section className="aurora">
+      <section className="-mt-[72px] pt-[72px] aurora">
         <div className="container-r py-16">
           <span className="eyebrow">FAQ</span>
           <h1 className="section-title mt-3">Vos questions, nos réponses</h1>

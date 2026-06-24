@@ -14,7 +14,7 @@ export default function AProposPage() {
   return (
     <>
       <JsonLd data={breadcrumbSchema([{ name: 'Accueil', path: '/' }, { name: 'À propos', path: '/a-propos' }])} />
-      <section className="aurora">
+      <section className="-mt-[72px] pt-[72px] aurora">
         <div className="container-r py-16 lg:py-20">
           <span className="eyebrow">À propos</span>
           <h1 className="section-title mt-3 max-w-3xl">Le regard extérieur qui fait progresser votre restaurant</h1>

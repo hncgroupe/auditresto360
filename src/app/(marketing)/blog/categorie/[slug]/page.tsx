@@ -56,7 +56,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
         ])}
       />
 
-      <section className="aurora">
+      <section className="-mt-[72px] pt-[72px] aurora">
         <div className="container-r py-14">
           <nav className="text-sm text-ink/50" aria-label="Fil d'Ariane">
             <Link href="/blog" className="hover:text-orange-700">Blog</Link>

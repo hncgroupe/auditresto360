@@ -17,7 +17,7 @@ export default function MethodePage() {
   return (
     <>
       <JsonLd data={breadcrumbSchema([{ name: 'Accueil', path: '/' }, { name: 'Méthode', path: '/methode' }])} />
-      <section className="aurora">
+      <section className="-mt-[72px] pt-[72px] aurora">
         <div className="container-r py-16 lg:py-20">
           <span className="eyebrow">La méthode</span>
           <h1 className="section-title mt-3 max-w-3xl">Une méthode rigoureuse, notée et transparente</h1>

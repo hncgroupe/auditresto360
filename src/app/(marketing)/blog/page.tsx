@@ -29,7 +29,7 @@ export default function BlogIndex() {
   return (
     <>
       <JsonLd data={breadcrumbSchema([{ name: 'Accueil', path: '/' }, { name: 'Blog', path: '/blog' }])} />
-      <section className="aurora">
+      <section className="-mt-[72px] pt-[72px] aurora">
         <div className="container-r py-16">
           <span className="eyebrow">Le blog</span>
           <h1 className="section-title mt-3 max-w-3xl">Conseils d’experts pour faire tourner votre restaurant</h1>
