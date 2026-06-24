@@ -26,8 +26,8 @@ export function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-40 border-b border-ink/8 bg-white transition-all duration-300 ${
-        scrolled ? 'shadow-card' : ''
+      className={`sticky top-0 z-40 transition-all duration-300 ${
+        scrolled ? 'border-b border-ink/8 bg-white shadow-card backdrop-blur-md' : 'border-b border-transparent bg-transparent'
       }`}
     >
       <div className={`container-r flex items-center justify-between transition-all duration-300 ${scrolled ? 'h-14' : 'h-[72px]'}`}>
