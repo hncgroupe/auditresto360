@@ -39,33 +39,109 @@ export async function sendTransactionalEmail(params: SendEmailParams): Promise<b
   }
 }
 
-/** Email de confirmation envoyé au lead après une demande. */
+/** Email de confirmation envoyé au lead après une demande. Design HTML compatible email (tables + styles inline). */
 export function leadConfirmationEmail(nom: string): { subject: string; htmlContent: string } {
+  const logo = `${env.siteUrl}/logo-auditresto360.png`;
+  const prenom = escapeHtml(nom.split(' ')[0] || nom);
+
+  const piliers = [
+    'Hygiène & HACCP',
+    'Conformité',
+    'Cuisine & production',
+    'Ressources humaines',
+    'Gestion & food cost',
+    'Carte & commercial',
+  ]
+    .map(
+      (p) =>
+        `<span style="display:inline-block;margin:0 6px 8px 0;padding:6px 12px;background:#FFF4EA;border:1px solid #FFE6CC;border-radius:999px;font-size:13px;color:#C25500;font-weight:600;">${p}</span>`
+    )
+    .join('');
+
+  const etapes = [
+    ['1', 'On vous rappelle', 'Un auditeur vous contacte pour préciser votre besoin et confirmer le devis.'],
+    ['2', 'Audit sur place', 'Visite de votre établissement, observation, mesures et entretien dirigeant.'],
+    ['3', 'Rapport & plan d’action', 'Notation par pilier, points critiques et actions priorisées, débriefés avec vous.'],
+  ]
+    .map(
+      ([n, t, d]) => `
+      <tr>
+        <td valign="top" style="width:44px;padding:0 0 18px 0;">
+          <table cellpadding="0" cellspacing="0" role="presentation"><tr><td style="width:34px;height:34px;background:#FF7A00;border-radius:50%;color:#ffffff;font-weight:800;font-size:15px;text-align:center;line-height:34px;font-family:Arial,Helvetica,sans-serif;">${n}</td></tr></table>
+        </td>
+        <td valign="top" style="padding:0 0 18px 8px;">
+          <div style="font-size:15px;font-weight:700;color:#0A0A0A;">${t}</div>
+          <div style="font-size:14px;color:#52525B;margin-top:2px;line-height:1.5;">${d}</div>
+        </td>
+      </tr>`
+    )
+    .join('');
+
+  const htmlContent = `
+  <!DOCTYPE html>
+  <html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"></head>
+  <body style="margin:0;padding:0;background:#F4F4F5;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#F4F4F5;padding:28px 12px;">
+      <tr><td align="center">
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:600px;max-width:100%;background:#ffffff;border-radius:18px;overflow:hidden;box-shadow:0 4px 24px -10px rgba(10,10,10,0.18);">
+
+          <!-- En-tete logo -->
+          <tr><td style="padding:30px 32px 0 32px;" align="left">
+            <img src="${logo}" alt="auditresto360" height="30" style="height:30px;width:auto;border:0;display:block;">
+          </td></tr>
+
+          <!-- Bandeau confirmation -->
+          <tr><td style="padding:24px 32px 0 32px;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:linear-gradient(120deg,#0A0A0A 0%,#1C1C1C 100%);background-color:#0A0A0A;border-radius:14px;">
+              <tr><td style="padding:22px 24px;">
+                <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#FF9226;">Demande bien reçue</div>
+                <div style="font-size:24px;font-weight:800;color:#ffffff;margin-top:6px;line-height:1.2;">Merci ${prenom}, on s'occupe de votre restaurant.</div>
+              </td></tr>
+            </table>
+          </td></tr>
+
+          <!-- Corps -->
+          <tr><td style="padding:26px 32px 8px 32px;font-family:'Poppins',Arial,Helvetica,sans-serif;color:#0A0A0A;">
+            <p style="margin:0 0 14px 0;font-size:15px;line-height:1.6;color:#3F3F46;">
+              Votre demande auprès d'<strong style="color:#0A0A0A;">auditresto360</strong> est enregistrée. Un membre de notre équipe revient vers vous très vite avec votre devis personnalisé et les prochaines étapes.
+            </p>
+
+            <div style="font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#C25500;margin:22px 0 14px 0;">Ce qui se passe maintenant</div>
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0">${etapes}</table>
+
+            <div style="height:1px;background:#EDEDF0;margin:8px 0 22px 0;"></div>
+
+            <div style="font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#C25500;margin-bottom:12px;">L'audit 360° couvre tout votre restaurant</div>
+            <div>${piliers}</div>
+
+            <!-- CTA -->
+            <table role="presentation" cellpadding="0" cellspacing="0" style="margin:26px 0 6px 0;"><tr>
+              <td style="background:#FF7A00;border-radius:999px;">
+                <a href="${env.siteUrl}/#configurateur" style="display:inline-block;padding:13px 26px;font-family:Arial,Helvetica,sans-serif;font-size:15px;font-weight:700;color:#ffffff;text-decoration:none;">Voir mon estimation</a>
+              </td>
+            </tr></table>
+          </td></tr>
+
+          <!-- Footer -->
+          <tr><td style="padding:18px 32px 30px 32px;">
+            <div style="height:1px;background:#EDEDF0;margin-bottom:18px;"></div>
+            <p style="margin:0 0 8px 0;font-size:13px;color:#52525B;">
+              Une question ? Écrivez-nous : <a href="mailto:contact@auditresto360.fr" style="color:#C25500;text-decoration:none;font-weight:600;">contact@auditresto360.fr</a>
+            </p>
+            <p style="margin:0;font-size:11px;line-height:1.6;color:#9AA1AB;">
+              auditresto360 est un audit conseil privé et indépendant. Il ne constitue ni une certification officielle, ni un agrément d'État, ni un contrôle des services vétérinaires/DDPP. auditresto360 n'est pas assujetti à la TVA (art. 293 B du CGI).
+            </p>
+          </td></tr>
+
+        </table>
+        <div style="font-size:11px;color:#B4B4BD;margin-top:16px;font-family:Arial,Helvetica,sans-serif;">© auditresto360 - auditresto360.fr</div>
+      </td></tr>
+    </table>
+  </body></html>`;
+
   return {
-    subject: 'Votre demande d’audit auditresto360 a bien été reçue',
-    htmlContent: `
-      <div style="font-family: 'Poppins', Arial, sans-serif; color: #0A0A0A; max-width: 560px; margin: auto;">
-        <div style="padding: 8px 0 16px;">
-          <span style="font-size: 26px; font-weight: 800; letter-spacing: -0.02em;">
-            <span style="color:#0A0A0A;">audit</span><span style="color:#FF7A00;">resto360</span>
-          </span>
-        </div>
-        <h2 style="color: #0A0A0A;">Merci ${escapeHtml(nom)},</h2>
-        <p>Votre demande auprès d'<strong>auditresto360</strong> est bien enregistrée.
-        Un membre de notre équipe vous recontacte rapidement pour préciser le périmètre et vous envoyer un devis personnalisé.</p>
-        <p>Notre audit 360° passe en revue tout votre restaurant :</p>
-        <ul>
-          <li>Hygiène, HACCP et conformité réglementaire</li>
-          <li>Cuisine, réserve et performance opérationnelle</li>
-          <li>Ressources humaines et organisation</li>
-          <li>Gestion, comptabilité, food cost et marges</li>
-          <li>Carte, expérience client et développement commercial</li>
-        </ul>
-        <p>Vous recevez ensuite un rapport clair : notation par pilier, points critiques et plan d'action priorisé.</p>
-        <p style="color: #6B7280; font-size: 13px;">auditresto360 est un audit conseil privé et indépendant.
-        Il ne constitue ni une certification officielle, ni un agrément d'État, ni un contrôle des services vétérinaires/DDPP.</p>
-      </div>
-    `,
+    subject: `Merci ${prenom}, votre demande d'audit est bien reçue`,
+    htmlContent,
   };
 }
 
