@@ -7,6 +7,8 @@ import { JsonLd } from '@/components/site/JsonLd';
 import { breadcrumbSchema } from '@/lib/schema';
 import { CtaBand } from '@/components/marketing/CtaBand';
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return getCategories().map((c) => ({ slug: c.slug }));
 }

@@ -7,6 +7,8 @@ import { env } from '@/lib/env';
 import { JsonLd } from '@/components/site/JsonLd';
 import { CtaBand } from '@/components/marketing/CtaBand';
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return getAllSlugs().map((slug) => ({ slug }));
 }
